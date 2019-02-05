@@ -10,7 +10,8 @@ const getTopWord = () => {
 };
 
 function setTopWord(top_word){
-  let word = top_word.word;
+  var word_obj = top_word.word;
+  var word = Object.keys(word_obj);
   $("#topWord").append(`${word}`);
 }
 
