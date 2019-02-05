@@ -83,12 +83,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 const getTopWord = () => {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#topWord').html('');
-
   fetch('https://wordwatch-api.herokuapp.com/api/v1/top_word')
     .then(response => response.json())
     .then(word_returned => setTopWord(word_returned))
     .catch(error => console.error({ error }));
-};
+}
 
 function setTopWord(top_word){
   var word_obj = top_word.word;
@@ -97,14 +96,41 @@ function setTopWord(top_word){
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#topWord").append(`<b>${word}</b> ${count} times`);
 }
 
-__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#breakdownButton").click(function() {
-  var text_input = __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.trim(__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#inputText").val());
-  console.log(`${text_input}`);
-});
+function addNewWords(input){
+  var wordArray = String(`${input}`).split(" ");
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.each(wordArray, function(index, value) {
+    addSingleWord(value);
+  });
+}
+
+function addSingleWord(single_word){
+  var data = {};
+  var wordNew = {"value": `${single_word}`};
+  data.word = wordNew;
+
+  var json = JSON.stringify(data);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", 'https://wordwatch-api.herokuapp.com/api/v1/words', true);
+  xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+  xhr.onload = function () {
+     if (xhr.readyState == 4 && xhr.status == "201") {
+       alert(`Add successful for ${single_word}`);
+     } else {
+       alert(`Add failed for ${single_word}`);
+     }
+  }
+  xhr.send(json);
+}
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).ready(() => {
   __WEBPACK_IMPORTED_MODULE_0_jquery___default()( window ).on( "load", getTopWord );
-})
+
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#breakdownButton").on('click', e => {
+    e.preventDefault();
+    var text_input = __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.trim(__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#inputText").val());
+    addNewWords(text_input);
+  });
+});
 
 
 /***/ }),
