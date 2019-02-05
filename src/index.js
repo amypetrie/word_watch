@@ -33,9 +33,9 @@ function addSingleWord(single_word){
   xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
   xhr.onload = function () {
      if (xhr.readyState == 4 && xhr.status == "201") {
-       console.log(`Add successful`);
+       alert(`Add successful for ${single_word}`);
      } else {
-       console.log(`Add failed`);
+       alert(`Add failed for ${single_word}`);
      }
   }
   xhr.send(json);
