@@ -12,7 +12,8 @@ const getTopWord = () => {
 function setTopWord(top_word){
   var word_obj = top_word.word;
   var word = Object.keys(word_obj);
-  $("#topWord").append(`${word}`);
+  var count = Object.values(word_obj);
+  $("#topWord").append(`<b>${word}</b> ${count} times`);
 }
 
 $(document).ready(() => {
