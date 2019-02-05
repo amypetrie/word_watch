@@ -16,11 +16,14 @@ function setTopWord(top_word){
   $("#topWord").append(`<b>${word}</b> ${count} times`);
 }
 
-function sendWords(){
-  var text_input = $.trim($("#inputText").val());
-  console.log(`${text_input}`);
-}
 
 $(document).ready(() => {
   $( window ).on( "load", getTopWord );
+
+  $("#breakdownButton").on('click', e => {
+    e.preventDefault();
+    var text_input = $.trim($("#inputText").val());
+    console.log(`${text_input}`);
+  });
+
 })
