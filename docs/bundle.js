@@ -80,10 +80,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 
-const button = document.getElementbyId("breakdownButton");
+
+const getTopWord = () => {
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#topWord').html('');
+
+  fetch('https://wordwatch-api.herokuapp.com/api/v1/top_word')
+    .then(response => response.json())
+    .then(word_returned => setTopWord(word_returned))
+    .catch(error => console.error({ error }));
+};
+
+function setTopWord(top_word){
+  var word_obj = top_word.word;
+  var word = Object.keys(word_obj);
+  var count = Object.values(word_obj);
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#topWord").append(`<b>${word}</b> ${count} times`);
+}
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#breakdownButton").click(function() {
+  var text_input = __WEBPACK_IMPORTED_MODULE_0_jquery___default.a.trim(__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#inputText").val());
+  console.log(`${text_input}`);
+});
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).ready(() => {
-  // have fun!
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()( window ).on( "load", getTopWord );
 })
 
 
